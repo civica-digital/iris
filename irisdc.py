@@ -11,7 +11,7 @@ import json
 import logging
 import os
 import sys
-import Queue
+import queue
 from oauth2client.client import SignedJwtAssertionCredentials
 from threading import Thread
 from flask import Flask, jsonify, request
@@ -26,7 +26,7 @@ __email__ = "miguel@codeandomexico.org"
 __status__ = "Prototype"
 
 app = Flask(__name__)
-queue = Queue.Queue()
+queue = queue.Queue()
 
 class IrisDimmensionalCalculator(Thread):
 
