@@ -11,9 +11,11 @@ import json
 import logging
 import os
 import sys
+import Queue
 from oauth2client.client import SignedJwtAssertionCredentials
 from threading import Thread
 from flask import Flask, jsonify, request
+
 
 __author__ = "Codeando México"
 __license__ = "GPL"
@@ -24,6 +26,7 @@ __email__ = "miguel@codeandomexico.org"
 __status__ = "Prototype"
 
 app = Flask(__name__)
+queue = Queue.Queue()
 
 class IrisDimmensionalCalculator(Thread):
 
@@ -38,7 +41,7 @@ class IrisDimmensionalCalculator(Thread):
 		raw_data = self.read_data(auth, docid)
 		data = self.extract_data(raw_data)
 		readiness_scores = self.assess_readiness(data)
-		return readiness_scores
+		queue.put(readiness_scores)
 		
 
 	def get_docid(self, url):
@@ -321,8 +324,10 @@ def get_response():
 	urldoc = request.args.get('url')
 	stringurl = str(urldoc)
 	iris = IrisDimmensionalCalculator(stringurl)
+
 	try:
-		iris_grade = iris.start()
+		iris.start()
+		iris_grade = queue.get()
 	except:
 		iris_grade = "Error de procesamiento"
 	return jsonify({'data': iris_grade})
