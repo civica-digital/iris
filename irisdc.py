@@ -63,7 +63,6 @@ class IrisDimmensionalCalculator(Thread):
 		# Should migrate to OAuth2 authentication.
 
 		# These should be placed in the environment variables.
-		raise Exception(email)
 		auth = gspread.login(email, password)
 		return auth
 
