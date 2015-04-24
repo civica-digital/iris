@@ -3,6 +3,7 @@
 
 """ Fetches data form a Google Spreadsheet and calculates different variables. """
 
+import argparse
 import configparser
 import csv
 import gspread
@@ -23,17 +24,23 @@ __status__ = "Prototype"
 
 class IrisDimmensionalCalculator(Thread):
 
-	def __init__(self):
+	def __init__(self, url):
 		Thread.__init__(self)
-		self.api_key = "1aHQHzfb8-hXHwDH7u4ykh6NsuA1NX2Bj845iMWpDnf8" # Google Spreadsheet document key
+		self.url = url
 
 	def run(self):
+		docid = self.get_docid(self.url)
 		keyset = self.get_keyset()
 		auth = self.authenticate(keyset['email'], keyset['password'])
-		raw_data = self.read_data(auth, self.api_key)
+		raw_data = self.read_data(auth, docid)
 		data = self.extract_data(raw_data)
 		readiness_scores = self.assess_readiness(data)
 		print(readiness_scores)
+
+	def get_docid(self, url):
+		tokens = url.split('/')
+		docid = tokens[5]
+		return docid
 
 	def get_keyset(self):
 		config = configparser.ConfigParser()
@@ -42,7 +49,7 @@ class IrisDimmensionalCalculator(Thread):
 		keyset = {}
 		keyset['email'] = config['keyset'].get('email')
 		keyset['password'] = config['keyset'].get('password')
-				
+		
 		return keyset
 
 	def authenticate(self, email, password):
@@ -50,15 +57,17 @@ class IrisDimmensionalCalculator(Thread):
 		# Should migrate to OAuth2 authentication.
 
 		# These should be placed in the environment variables.
-		gc = gspread.login(email, password)
-		return gc
+		auth = gspread.login(email, password)
+		
+		return auth
 
-	def read_data(self, auth, key):
+	def read_data(self, auth, docid):
 		# Opens a worksheet from spreadsheet from its key
-		sh = auth.open_by_key(key)
+		sh = auth.open_by_key(docid)
 		worksheet = sh.sheet1
 		# Gets all values from the first row.
 		answers_list = worksheet.row_values(2)
+		
 		return answers_list
 
 	# Extracts the data and loads it to a dictionary
@@ -75,6 +84,7 @@ class IrisDimmensionalCalculator(Thread):
 		'imp_self_assessment','cap_dbms','cap_design']
 		# Note: Answers that have CSV should be stored as a list.
 		answers_dict = dict(zip(variables, raw_data))
+		
 		return answers_dict
 
 	def assess_readiness(self, data):
@@ -295,13 +305,22 @@ class IrisDimmensionalCalculator(Thread):
 		
 		return impact_score
 
+def get_args():
+	parser = argparse.ArgumentParser()
+	parser.add_argument('--url')
+	return parser.parse_args()
 	
 def main():
 	logging.basicConfig(level=logging.ERROR) # To do: Implement logging.
+	args = get_args()
+	url = args.url
 
-	iris_calculator = IrisDimmensionalCalculator()
-	iris_calculator.start()
-	
+	iris = IrisDimmensionalCalculator(url)
+	try:
+		iris.start()
+	except:
+		logging.error(sys.exc_info()[1])
+		sys.exit(1)
 
 if __name__ == '__main__':
 	main()
