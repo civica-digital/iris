@@ -13,6 +13,7 @@ import os
 import sys
 from oauth2client.client import SignedJwtAssertionCredentials
 from threading import Thread
+from flask import Flask, jsonify, request
 
 __author__ = "Codeando México"
 __license__ = "GPL"
@@ -21,6 +22,8 @@ __credits__ = "Miguel Salazar, Ricardo Alanis"
 __maintainer__ = "Miguel Salazar"
 __email__ = "miguel@codeandomexico.org"
 __status__ = "Prototype"
+
+app = Flask(__name__)
 
 class IrisDimmensionalCalculator(Thread):
 
@@ -35,11 +38,14 @@ class IrisDimmensionalCalculator(Thread):
 		raw_data = self.read_data(auth, docid)
 		data = self.extract_data(raw_data)
 		readiness_scores = self.assess_readiness(data)
-		print(readiness_scores)
+		return readiness_scores
+		
 
 	def get_docid(self, url):
 		tokens = url.split('/')
-		docid = tokens[5]
+		docid = ""
+		for token in tokens: 
+			if len(token)==44: docid = token
 		return docid
 
 	def get_keyset(self):
@@ -47,8 +53,8 @@ class IrisDimmensionalCalculator(Thread):
 		config.read(['./irisdc', os.path.expanduser('~/.irisdc')])
 		
 		keyset = {}
-		keyset['email'] = config['keyset'].get('email')
-		keyset['password'] = config['keyset'].get('password')
+		keyset['email'] = config.get("keyset",'email')
+		keyset['password'] = config.get("keyset",'password')
 		
 		return keyset
 
@@ -57,8 +63,8 @@ class IrisDimmensionalCalculator(Thread):
 		# Should migrate to OAuth2 authentication.
 
 		# These should be placed in the environment variables.
+		raise Exception(email)
 		auth = gspread.login(email, password)
-		
 		return auth
 
 	def read_data(self, auth, docid):
@@ -305,22 +311,29 @@ class IrisDimmensionalCalculator(Thread):
 		
 		return impact_score
 
-def get_args():
-	parser = argparse.ArgumentParser()
-	parser.add_argument('--url')
-	return parser.parse_args()
-	
+# Argument Parser for offline review
+#def get_args():
+#	parser = argparse.ArgumentParser()
+#	parser.add_argument('--url')
+#	return parser.parse_args()
+
+@app.route('/api/response', methods=['GET'])
+def get_response():
+	urldoc = request.args.get('url')
+	stringurl = str(urldoc)
+	iris = IrisDimmensionalCalculator(stringurl)
+	try:
+		iris_grade = iris.start()
+	except:
+		iris_grade = "Error de procesamiento"
+	return jsonify({'data': iris_grade})
+
 def main():
 	logging.basicConfig(level=logging.ERROR) # To do: Implement logging.
-	args = get_args()
-	url = args.url
-
-	iris = IrisDimmensionalCalculator(url)
-	try:
-		iris.start()
-	except:
-		logging.error(sys.exc_info()[1])
-		sys.exit(1)
+	#args = get_args()
+	#url = args.url
+	
 
 if __name__ == '__main__':
+	app.run(debug=True)
 	main()
