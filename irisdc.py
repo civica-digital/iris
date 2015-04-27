@@ -95,6 +95,18 @@ class IrisDimmensionalCalculator(Thread):
 		
 		return answers_dict
 
+	def set_max_grade(data):
+		max_grade = 1.0
+		rounded = data
+		if data > max_grade: rounded = 1.0
+		return rounded
+
+	def percentage_to_decimal(inputdata):
+		data = inputdata.strip("%")
+		data = float(data)
+		data_percentage = data/100.0
+		return data_percentage
+
 	def assess_readiness(self, data):
 		leadership_score = self.get_leadership_score(data)
 		fundings_score = self.get_fundings_score(data)
@@ -150,6 +162,8 @@ class IrisDimmensionalCalculator(Thread):
 
 		leadership_score = (official_score + unofficial_score)/30
 
+		set_max_grade(leadership_score)
+
 		return leadership_score
 
 	# Fundings score
@@ -161,7 +175,7 @@ class IrisDimmensionalCalculator(Thread):
 		budget_data = data['funds_percentage']
 		budget = budget_data.strip("%")
 		budget = float(budget)
-		budget_percentage = budget/10
+		budget_percentage = budget/100.0
 
 		# Note: Need to be extracareful here when handling the 'Otra' field.
 		sources_inprocess = data['funds_inprocess'].split(', ')
@@ -170,6 +184,7 @@ class IrisDimmensionalCalculator(Thread):
 			inprocess_sum += 1
 
 		fundings_score = budget_percentage * (1+(0.05 * inprocess_sum))
+		set_max_grade(fundings_score)
 		return fundings_score
 
 	# Institutional Structures and Skills score
@@ -225,6 +240,8 @@ class IrisDimmensionalCalculator(Thread):
 
 		capabilities_score = capabilities_sum/12
 
+		set_max_grade(capabilities_score)
+
 		return capabilities_score
 
 	# Degree of Dataset Openness score
@@ -246,14 +263,35 @@ class IrisDimmensionalCalculator(Thread):
 		geospatial = float(data['opn_geospatial']) # Validate
 		if geospatial > 0:
 			openness_sum += 3
-
-		#opn_training = data['opn_training']
-		#opn_training_technical = data['opn_training_technical']
-		#opn_training_org = data['opn_training_org']
-		#opn_training_legal = data['opn_training_legal']
-		#opn_training_agencies = data['opn_training_agencies']
 		
+		opn_training = float(data['opn_training'])
+
+		if opn_traning == 1:
+			openness_sum += 1
+
+		#1 point if one training, 2 points if more than one trainings
+		#1 point more if more than one agency with a course given.
+
+		opn_training_technical = data['opn_training_technical']
+		opn_training_technical = percentage_to_decimal(opn_training_technical)
+		
+		opn_training_org = data['opn_training_org']
+		opn_training_org = percentage_to_decimal(opn_training_org)
+
+		opn_training_legal = data['opn_training_legal']
+		opn_training_legal = percentage_to_decimal(opn_training_legal)
+
+		if opn_training_org > 0 or opn_training > 0: 
+			openness_sum += 2
+
+		opn_training_agencies = float(data['opn_training_agencies']) #Validate
+		
+		if opn_training_agencies > 1: 
+			openness_sum += 1
+
 		openness_score = openness_sum/8
+
+		set_max_grade(openess_score)
 
 		return openness_score
 
@@ -281,6 +319,8 @@ class IrisDimmensionalCalculator(Thread):
 
 		legal_score = legal_sum/4
 
+		set_max_grade(legal_score)
+
 		return legal_score
 
 	# Society Readiness score
@@ -299,6 +339,9 @@ class IrisDimmensionalCalculator(Thread):
 			society_sum += 1
 
 		society_score = society_sum/3
+
+		set_max_grade(society_score)
+
 		return society_score
 
 	# Impact Evaluation score
@@ -310,6 +353,8 @@ class IrisDimmensionalCalculator(Thread):
 			impact_sum += 1
 
 		impact_score = impact_sum/2
+
+		set_max_grade(impact_score)
 		
 		return impact_score
 
