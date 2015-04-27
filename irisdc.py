@@ -375,7 +375,7 @@ def get_response():
 		iris_grade = queue.get()
 	except:
 		iris_grade = "Error de procesamiento"
-	return jsonify({'data': iris_grade})
+	return jsonify({iris_grade})
 
 def main():
 	logging.basicConfig(level=logging.ERROR) # To do: Implement logging.
