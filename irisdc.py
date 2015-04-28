@@ -55,9 +55,6 @@ def get_response():
 		iris_grade = "Error de procesamiento"
 	return jsonify({'data':[iris_grade]})
 
-@app.route('/js/<path:path>')
-def send_js(path):
-    return send_from_directory('js', path)
 
 def main():
 	logging.basicConfig(level=logging.ERROR) # To do: Implement logging.
