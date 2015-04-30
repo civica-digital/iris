@@ -11,7 +11,7 @@ import sys
 import queue
 import requests
 from oauth2client.client import SignedJwtAssertionCredentials
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, send_from_directory
 
 import IrisDimmensionalCalculator
 
@@ -54,10 +54,6 @@ def get_response():
 	except:
 		iris_grade = "Error de procesamiento"
 	return jsonify({'data':[iris_grade]})
-
-@app.route('/static/<path:path>')
-def send_static(path):
-    return send_from_directory('static', path)
 
 if __name__ == '__main__':
 	app.run(debug=True, threaded=True)
