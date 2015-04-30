@@ -1,1 +1,1 @@
-web: gunicorn irisdc:app --threads 4
+web: gunicorn --pythonpath app irisdc:app --threads 4
