@@ -1,5 +1,5 @@
 from threading import Thread
-import configparser
+#import configparser
 import os
 import gspread
 
@@ -28,12 +28,14 @@ class IrisDimmensionalCalculator(Thread):
 		return docid
 
 	def get_keyset(self):
-		config = configparser.ConfigParser()
-		config.read(['./irisdc', os.path.expanduser('~/.irisdc')])
+		#config = configparser.ConfigParser()
+		#config.read(['./irisdc', os.path.expanduser('~/.irisdc')])
 		
 		keyset = {}
-		keyset['email'] = config.get("keyset",'email')
-		keyset['password'] = config.get("keyset",'password')
+		keyset['email'] = os.environ.get('EMAIL_USER')
+		keyset['password'] = os.environ.get('PASSWORD_USER')
+		#keyset['email'] = config.get("keyset",'email')
+		#keyset['password'] = config.get("keyset",'password')
 		
 		return keyset
 
