@@ -13,6 +13,8 @@ import requests
 from oauth2client.client import SignedJwtAssertionCredentials
 from flask import Flask, jsonify, request, render_template, send_from_directory
 
+from hamlish_jinja import HamlishTagExtension
+
 import IrisDimmensionalCalculator
 
 
@@ -27,9 +29,11 @@ __status__ = "Prototype"
 app = Flask(__name__)
 queue = queue.Queue()
 
+app.jinja_env.add_extension(HamlishTagExtension)
+
 @app.route('/')
 def form():
-    return render_template("form.html")
+    return render_template("form.html.haml")
 
 @app.route('/', methods=['POST'])
 def form_post():
