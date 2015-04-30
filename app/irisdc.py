@@ -56,7 +56,7 @@ def get_response():
 	return jsonify({'data':[iris_grade]})
 
 @app.route('/static/<path:path>')
-def send_js(path):
+def send_static(path):
     return send_from_directory('static', path)
 
 if __name__ == '__main__':
