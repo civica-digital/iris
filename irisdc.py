@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# irisdc.py
 
 """ Fetches data form a Google Spreadsheet and calculates different variables. """
 
@@ -34,7 +35,7 @@ def form():
 def form_post():
 
     url = request.form['url']
-    call_url = 'http://localhost:5000/api/response?url="'+ url+ '"'
+    call_url = 'http://localhost:8000/api/response?url="'+ url+ '"'
     request_url = requests.get(call_url)
     graphdata = request_url.json()['data']
     graphjson = json.dumps(graphdata)

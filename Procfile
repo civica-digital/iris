@@ -1,1 +1,1 @@
-python3 irisdc.py
+gunicorn irisdc:app --threads 4
