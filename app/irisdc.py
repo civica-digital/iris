@@ -55,5 +55,9 @@ def get_response():
 		iris_grade = "Error de procesamiento"
 	return jsonify({'data':[iris_grade]})
 
+@app.route('/static/<path:path>')
+def send_js(path):
+    return send_from_directory('static', path)
+
 if __name__ == '__main__':
 	app.run(debug=True, threaded=True)
