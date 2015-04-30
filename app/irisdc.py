@@ -35,7 +35,7 @@ def form():
 def form_post():
 
     url = request.form['url']
-    call_url = 'http://localhost/api/response?url="'+ url+ '"'
+    call_url = 'http://powerful-oasis-7324.herokuapp.com/api/response?url="'+ url+ '"'
     request_url = requests.get(call_url)
     graphdata = request_url.json()['data']
     graphjson = json.dumps(graphdata)
