@@ -55,4 +55,4 @@ def get_response():
 	return jsonify({'data':[iris_grade]})
 
 if __name__ == '__main__':
-	app.run(debug=True, threaded=True, port=80)
+	app.run(debug=True, threaded=True)
