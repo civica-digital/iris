@@ -1,0 +1,15 @@
+Flask
+Jinja2
+Werkzeug
+gunicorn
+requests
+argparse
+csv
+json
+logging
+sys
+queue
+gspread
+os
+configparser
+threading
