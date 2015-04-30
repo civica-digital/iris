@@ -1,5 +1,8 @@
-{% haml %}
 %html lang="en"
+%head
+    %title -> Iris
+    -assets "css_all"
+      %link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"
 %body
     %h1 
       Ingrese la url completa del archivo con las respuestas
@@ -8,4 +11,3 @@
     %form action="." method="POST"
       %input type="text" name="url"
       %input type="submit" name="form" value="Send"
-{% endhaml %}
