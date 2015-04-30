@@ -5,6 +5,5 @@ gunicorn
 requests
 argparse
 gspread
-os
 configparser
 threading
