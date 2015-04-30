@@ -4,7 +4,7 @@ Werkzeug
 gunicorn
 requests
 argparse
-queue
+Queue
 gspread
 os
 configparser
