@@ -6,7 +6,6 @@
 import argparse
 import csv
 import json
-import logging
 import sys
 import queue
 import requests
@@ -55,13 +54,5 @@ def get_response():
 		iris_grade = "Error de procesamiento"
 	return jsonify({'data':[iris_grade]})
 
-
-def main():
-	logging.basicConfig(level=logging.ERROR) # To do: Implement logging.
-	#args = get_args()
-	#url = args.url
-	
-
 if __name__ == '__main__':
 	app.run(debug=True, threaded=True)
-	main()
