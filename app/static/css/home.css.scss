@@ -1,3 +1,21 @@
-body {
-  color: blue;
+
+.inicio .texto-inicio {
+  margin-top: 1%;
+}
+
+.container .texto-inicio {
+  position: absolute;
+}
+
+#url {
+  border-radius: 6px;
+  width: 550px;
+  float: none;
+}
+
+.input-group-lg.local {
+  display: block;
+}
+#submit {
+  margin-top: 20px;
 }

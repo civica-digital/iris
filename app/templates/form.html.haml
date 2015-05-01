@@ -1,13 +1,14 @@
-%html lang="en"
-%head
-    %title -> Iris
-    -assets "css_all"
-      %link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"
-%body
-    %h1 
+-extends "_header.html.haml"
+-block content
+  %div.container.texto-inicio
+    %h2.text-center.section-title
       Ingrese la url completa del archivo con las respuestas
-    %h2
+    %h3.text-center.section-title
       Copy paste desde la página es suficiente
-    %form action="." method="POST"
-      %input type="text" name="url"
-      %input type="submit" name="form" value="Send"
+    %div.container
+     %div.col-md-12
+      %form.newsletter.center-block  _lpchecked="1" action="." method="POST"
+        %div.input-group.input-group-lg.local
+            %input.form-control#url placeholder="URL de la encuesta" type="url" name="url"
+        %div.input-group.input-group-lg.local.col-md-12
+            %input.btn.btn-default.btn-success.btn-lg.center-block#submit type="submit" value="Enviar encuesta" name="form"

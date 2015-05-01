@@ -1,0 +1,38 @@
+%html lang="en"
+  %head
+    %title -> Iris
+    %link rel="stylesheet" type="text/css" href="/static/css/main.css"
+    %link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"
+    -assets "css_all"
+      %link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"
+%body
+  %div.inicio
+    %div.overlay-photo
+    %header.navbar.navbar-static-top.navbar-inverse
+      %div.container
+        %img src="/static/images/toplogo.png" class="navbar-brand"
+        %nav
+          %ul.nav.navbar-nav.pull-right
+            %li
+              %a
+                Inicio
+            %li
+              %a
+                Miembros
+            %li
+              %a
+                Herramientas
+            %li
+              %a
+                Únete
+            %li
+              %a
+                Experiencias
+            %li
+              %a href="/"
+                Log in
+    %div.container.texto-inicio
+      -block content
+        algo
+  %div.separador-verde
+  -include "_footer.html.haml"
