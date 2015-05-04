@@ -95,25 +95,25 @@ class IrisDimmensionalCalculator(Thread):
 		impact_score = self.get_impact_score(data)
 		
 		readiness_scores = []
-		leaderdic = {'axis':'leadership',"value":leadership_score}
+		leaderdic = {'axis':'liderazgo',"value":leadership_score}
 		readiness_scores.append(leaderdic)
 
-		fundic = {'axis':'fundings',"value":fundings_score}
+		fundic = {'axis':'fondos',"value":fundings_score}
 		readiness_scores.append(fundic)
 		
-		capdic = {'axis':'capabilities',"value":capabilities_score}
+		capdic = {'axis':'capacidades',"value":capabilities_score}
 		readiness_scores.append(capdic)
 
-		opdic = {'axis':'openness',"value":openness_score}
+		opdic = {'axis':'apertura',"value":openness_score}
 		readiness_scores.append(opdic)
 		
 		legdic = {'axis':'legal',"value":legal_score}
 		readiness_scores.append(legdic)
 		
-		socdic = {'axis':'society',"value":society_score}
+		socdic = {'axis':'sociedad',"value":society_score}
 		readiness_scores.append(socdic)
 
-		impdic = {'axis':'impact',"value":impact_score}
+		impdic = {'axis':'impacto',"value":impact_score}
 		readiness_scores.append(impdic)
 
 
