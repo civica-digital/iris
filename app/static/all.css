@@ -1,0 +1,26 @@
+/* line 2 */
+.inicio .texto-inicio {
+  margin-top: 1%;
+}
+
+/* line 6 */
+.container .texto-inicio {
+  position: absolute;
+}
+
+/* line 10 */
+#url {
+  border-radius: 6px;
+  width: 550px;
+  float: none;
+}
+
+/* line 16 */
+.input-group-lg.local {
+  display: block;
+}
+
+/* line 19 */
+#submit {
+  margin-top: 20px;
+}
