@@ -33,11 +33,11 @@ queue = queue.Queue()
 
 app.jinja_env.add_extension(HamlishExtension)
 
-assets = Environment(app)
-assets.url = app.static_url_path
+#assets = Environment(app)
+#assets.url = app.static_url_path
 
-css_bundle = Bundle('css/home.css.scss', filters='scss', output='all.css')
-assets.register('css_all', css_bundle)
+#css_bundle = Bundle('css/home.css.css', filters='css', output='all.css')
+#assets.register('css_all', css_bundle)
 
 #js_bundl = Bundle('js/home.js.coffe', filters='coffescript', output='all.js')
 #assets.register('js_all', js_bundle)
