@@ -55,7 +55,7 @@ def form_post():
     graphdata = request_url.json()['data']
     graphjson = json.dumps(graphdata)
     graphjson = graphjson
-    return render_template("graph.html", graphjson= graphjson)
+    return render_template("graph.html.haml", graphjson= graphjson)
 
 @app.route('/api/response', methods=['GET'])
 def get_response():
