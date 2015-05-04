@@ -7,7 +7,7 @@ var colorscale = d3.scale.category10();
 var LegendOptions = ['Smartphone','Tablet'];
 //Data
 
-var graphdump = {{graphjson|safe}};
+
 
 d = graphdump
 
@@ -123,4 +123,4 @@ legend.selectAll('text')
 .attr("font-size", "11px")
 .attr("fill", "#737373")
 .text(function(d) { return d; })
-;	
+;
