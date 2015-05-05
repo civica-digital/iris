@@ -17,3 +17,12 @@ body {
 .inicio {
   height: 90px;
 }
+
+.navbar {
+  padding: 14px 0;
+}
+
+.navbar-inverse {
+  background-color: #304660;
+  border-color: transparent;
+}
