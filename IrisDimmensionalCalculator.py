@@ -95,25 +95,25 @@ class IrisDimmensionalCalculator(Thread):
 		impact_score = self.get_impact_score(data)
 		
 		readiness_scores = []
-		leaderdic = {'axis':'liderazgo',"value":leadership_score}
+		leaderdic = {'axis':'leadership',"value":leadership_score}
 		readiness_scores.append(leaderdic)
 
-		fundic = {'axis':'fondos',"value":fundings_score}
+		fundic = {'axis':'fundings',"value":fundings_score}
 		readiness_scores.append(fundic)
 		
-		capdic = {'axis':'capacidades',"value":capabilities_score}
+		capdic = {'axis':'capabilities',"value":capabilities_score}
 		readiness_scores.append(capdic)
 
-		opdic = {'axis':'apertura',"value":openness_score}
+		opdic = {'axis':'openness',"value":openness_score}
 		readiness_scores.append(opdic)
 		
 		legdic = {'axis':'legal',"value":legal_score}
 		readiness_scores.append(legdic)
 		
-		socdic = {'axis':'sociedad',"value":society_score}
+		socdic = {'axis':'society',"value":society_score}
 		readiness_scores.append(socdic)
 
-		impdic = {'axis':'impacto',"value":impact_score}
+		impdic = {'axis':'impact',"value":impact_score}
 		readiness_scores.append(impdic)
 
 
@@ -156,7 +156,9 @@ class IrisDimmensionalCalculator(Thread):
 
 		leadership_score = self.set_max_grade(leadership_score)
 
-		return leadership_score
+		leadership_todo = 1.0  - leadership_score
+
+		return leadership_todo
 
 	# Fundings score
 	def get_fundings_score(self, data):
@@ -177,7 +179,10 @@ class IrisDimmensionalCalculator(Thread):
 
 		fundings_score = budget_percentage * (1+(0.05 * inprocess_sum))
 		fundings_score = self.set_max_grade(fundings_score)
-		return fundings_score
+
+		fundings_todo = 1.0 - fundings_score
+
+		return fundings_todo
 
 	# Institutional Structures and Skills score
 	def get_capabilities_score(self, data):
@@ -234,7 +239,8 @@ class IrisDimmensionalCalculator(Thread):
 
 		capabilities_score = self.set_max_grade(capabilities_score)
 
-		return capabilities_score
+		capabilities_todo = 1.0 - capabilities_score
+		return capabilities_todo
 
 	# Degree of Dataset Openness score
 	def get_openness_score(self, data):
@@ -286,7 +292,9 @@ class IrisDimmensionalCalculator(Thread):
 
 		openness_score = self.set_max_grade(openness_score)
 
-		return openness_score
+		openness_todo = 1.0 - openness_score
+
+		return openness_todo
 
 	# Policy/Legal Framework score
 	def get_legal_score(self, data):
@@ -310,11 +318,13 @@ class IrisDimmensionalCalculator(Thread):
 		#leg_local_reference = data['leg_local_reference']
 		#leg_state_reference = data['leg_state_reference']
 
-		legal_score = legal_sum/4
+		legal_score = legal_sum/4.0
 
 		legal_score = self.set_max_grade(legal_score)
 
-		return legal_score
+		legal_todo = 1.0 - legal_todo
+
+		return legal_todo 
 
 	# Society Readiness score
 	def get_society_score(self, data):
@@ -335,7 +345,9 @@ class IrisDimmensionalCalculator(Thread):
 
 		society_score = self.set_max_grade(society_score)
 
-		return society_score
+		society_todo = 1.0 - society_score
+
+		return society_todo
 
 	# Impact Evaluation score
 	def get_impact_score(self, data):
@@ -345,11 +357,13 @@ class IrisDimmensionalCalculator(Thread):
 		for element in assessment_mechanisms:
 			impact_sum += 1
 
-		impact_score = impact_sum/2
+		impact_score = impact_sum/2.0
 
 		impact_score = self.set_max_grade(impact_score)
-		
-		return impact_score
+
+		impact_todo = 1.0 - impact_score
+
+		return impact_todo
 
 # Argument Parser for offline review
 #def get_args():
