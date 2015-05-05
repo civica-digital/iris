@@ -2,6 +2,7 @@ from threading import Thread
 #import configparser
 import os
 import gspread
+import yaml
 
 import i18n
 
@@ -9,6 +10,9 @@ i18n.load_path.append('app/locales/')
 i18n.set('locale', 'es')
 i18n.set('fallback', 'en')
 _ = i18n.t
+
+raw_ref = open("app/static/content/descripcion-indicadores.yml").read()
+ref = yaml.load(raw_ref)['Descripción de los indicadores']
 
 class IrisDimmensionalCalculator(Thread):
 
@@ -102,25 +106,39 @@ class IrisDimmensionalCalculator(Thread):
 		impact_score = self.get_impact_score(data)
 
 		readiness_scores = []
-		leaderdic = {'axis':_('iris.leadership'),"value":leadership_score}
+		leaderdic = {'axis': _('iris.leadership'),
+					 'value': leadership_score,
+					 'desc': ref['leadership']}
 		readiness_scores.append(leaderdic)
 
-		fundic = {'axis':_('iris.fundings'),"value":fundings_score}
+		fundic = {'axis': _('iris.fundings'),
+				  'value': fundings_score,
+				  'desc': ref['fundings']}
 		readiness_scores.append(fundic)
 
-		capdic = {'axis':_('iris.capabilities'),"value":capabilities_score}
+		capdic = {'axis': _('iris.capabilities'),
+				  'value': capabilities_score,
+				  'desc': ref['capabilities']}
 		readiness_scores.append(capdic)
 
-		opdic = {'axis':_('iris.openness'),"value":openness_score}
+		opdic = {'axis': _('iris.openness'),
+				 'value': openness_score,
+				 'desc': ref['openness']}
 		readiness_scores.append(opdic)
 
-		legdic = {'axis':_('iris.legal'),"value":legal_score}
+		legdic = {'axis': _('iris.legal'),
+		          'value': legal_score,
+				  'desc': ref['legal']}
 		readiness_scores.append(legdic)
 
-		socdic = {'axis':_('iris.society'),"value":society_score}
+		socdic = {'axis': _('iris.society'),
+		          'value': society_score,
+				  'desc': ref['society']}
 		readiness_scores.append(socdic)
 
-		impdic = {'axis':_('iris.impact'),"value":impact_score}
+		impdic = {'axis': _('iris.impact'),
+		          'value': impact_score,
+				  'desc': ref['impact']}
 		readiness_scores.append(impdic)
 
 
