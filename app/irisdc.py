@@ -10,6 +10,7 @@ import json
 import sys
 import queue
 import requests
+import markdown
 
 from oauth2client.client import SignedJwtAssertionCredentials
 from flask import Flask, jsonify, request, render_template, send_from_directory
@@ -56,6 +57,12 @@ def form_post():
     graphjson = json.dumps(graphdata)
     graphjson = graphjson
     return render_template("graph.html.haml", graphjson= graphjson)
+
+@app.route('/que-es-iris')
+def get_que_es_iris():
+    file = open("app/static/content/index.md")
+    content = markdown.markdown(file.read())
+    return render_template("md.html.haml", title="¿Qué es Iris?", content=content)
 
 @app.route('/api/response', methods=['GET'])
 def get_response():
