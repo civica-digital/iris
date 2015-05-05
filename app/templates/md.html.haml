@@ -1,0 +1,13 @@
+%html lang="en"
+  %head
+   %meta http-equiv="Content-Type" content="text/html;charset=utf-8"
+   %title {{ title }}
+   %link rel="stylesheet" type="text/css" href="/static/css/main.css"
+   %link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"
+   %link rel="stylesheet" href="/static/css/home.css"
+  %body
+    %div.inicio
+      -include "_menu.html.haml"
+    {{ content }}
+    %div.separador-verde
+    -include "_footer.html.haml"
