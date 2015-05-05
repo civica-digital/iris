@@ -64,6 +64,12 @@ def get_que_es_iris():
     content = markdown.markdown(file.read())
     return render_template("md.html.haml", title="¿Qué es Iris?", content=content)
 
+@app.route('/como-contestar-iris')
+def get_como_contestar_iris():
+    file = open("app/static/content/como-contestar-iris.md")
+    content = markdown.markdown(file.read())
+    return render_template("md.html.haml", title="¿Cómo contestar IRIS?", content=content)
+
 @app.route('/api/response', methods=['GET'])
 def get_response():
 	urldoc = request.args.get('url')
