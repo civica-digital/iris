@@ -7,7 +7,7 @@ import i18n
 
 i18n.load_path.append('app/locales/')
 i18n.set('locale', 'es')
-i18n.set('fallback', 'es')
+i18n.set('fallback', 'en')
 _ = i18n.t
 
 class IrisDimmensionalCalculator(Thread):
@@ -102,7 +102,7 @@ class IrisDimmensionalCalculator(Thread):
 		impact_score = self.get_impact_score(data)
 
 		readiness_scores = []
-		leaderdic = {'axis':_('iris.es.leadership'),"value":leadership_score}
+		leaderdic = {'axis':_('iris.leadership'),"value":leadership_score}
 		readiness_scores.append(leaderdic)
 
 		fundic = {'axis':_('iris.fundings'),"value":fundings_score}
@@ -117,10 +117,10 @@ class IrisDimmensionalCalculator(Thread):
 		legdic = {'axis':_('iris.legal'),"value":legal_score}
 		readiness_scores.append(legdic)
 
-		socdic = {'axis':'society',"value":society_score}
+		socdic = {'axis':_('iris.society'),"value":society_score}
 		readiness_scores.append(socdic)
 
-		impdic = {'axis':'impact',"value":impact_score}
+		impdic = {'axis':_('iris.impact'),"value":impact_score}
 		readiness_scores.append(impdic)
 
 
