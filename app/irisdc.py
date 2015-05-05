@@ -43,7 +43,7 @@ assets.register('css_all', css_bundle)
 #js_bundl = Bundle('js/home.js.coffe', filters='coffescript', output='all.js')
 #assets.register('js_all', js_bundle)
 
-@app.route('/')
+@app.route('/visualiza-tus-resultados')
 def form():
     return render_template("form.html.haml")
 
@@ -58,17 +58,17 @@ def form_post():
     graphjson = graphjson
     return render_template("graph.html.haml", graphjson= graphjson)
 
-@app.route('/que-es-iris')
+@app.route('/')
 def get_que_es_iris():
     file = open("app/static/content/index.md")
     content = mistune.markdown(file.read())
-    return render_template("md.html.haml", title="¿Qué es Iris?", content=content)
+    return render_template("md.html.haml", title="Inicio", content=content)
 
-@app.route('/como-contestar-iris')
+@app.route('/contesta-iris')
 def get_como_contestar_iris():
     file = open("app/static/content/como-contestar-iris.md")
     content = mistune.markdown(file.read())
-    return render_template("md.html.haml", title="¿Cómo contestar IRIS?", content=content)
+    return render_template("md.html.haml", title="Contesta IRIS", content=content)
 
 @app.route('/api/response', methods=['GET'])
 def get_response():
