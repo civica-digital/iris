@@ -6,11 +6,11 @@ body {
 }
 
 #chart {
-  width: 100%;
   height: 700px;
   background-color: white;
-  padding: 50px;
+  padding: 50px 8%;
   text-align: center;
+  float: left;
 }
 
 
@@ -25,4 +25,9 @@ body {
 .navbar-inverse {
   background-color: #304660;
   border-color: transparent;
+}
+
+#description {
+  float: right;
+  padding-top: 50px;
 }

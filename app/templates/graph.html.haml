@@ -11,7 +11,13 @@
   %body
     %div.inicio
       -include "_menu.html.haml"
-    %div id="chart"
+    %div.container.row
+      %div.col-sm-8.col-md-4 id="chart"
+      %div.col-sm-8.col-md-4 id="description"
+        %h2#title
+          IRIS
+        %p#desc
+          Esta es visión general sobre tu grado de apertura de información.
     %div.separador-verde
     -include "_footer.html.haml"
     %script
