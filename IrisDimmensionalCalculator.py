@@ -76,7 +76,7 @@ class IrisDimmensionalCalculator(Thread):
 	def set_max_grade(self, data):
 		max_grade = 1.0
 		rounded = float(data)
-		if data > max_grade: rounded = 1.0
+		if data >= max_grade: rounded = 0.999
 		return rounded
 
 	def percentage_to_decimal(self, inputdata):
