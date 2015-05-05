@@ -322,7 +322,7 @@ class IrisDimmensionalCalculator(Thread):
 
 		legal_score = self.set_max_grade(legal_score)
 
-		legal_todo = 1.0 - legal_todo
+		legal_todo = 1.0 - legal_score 
 
 		return legal_todo 
 
