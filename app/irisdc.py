@@ -10,8 +10,12 @@ import json
 import sys
 import queue
 import requests
+
 from oauth2client.client import SignedJwtAssertionCredentials
 from flask import Flask, jsonify, request, render_template, send_from_directory
+from hamlish_jinja import HamlishExtension
+from flask.ext.assets import Environment, Bundle
+
 
 import IrisDimmensionalCalculator
 
@@ -27,9 +31,20 @@ __status__ = "Prototype"
 app = Flask(__name__)
 queue = queue.Queue()
 
+app.jinja_env.add_extension(HamlishExtension)
+
+assets = Environment(app)
+assets.url = app.static_url_path
+
+css_bundle = Bundle('css/home.css.css',  output='all.css')
+assets.register('css_all', css_bundle)
+
+#js_bundl = Bundle('js/home.js.coffe', filters='coffescript', output='all.js')
+#assets.register('js_all', js_bundle)
+
 @app.route('/')
 def form():
-    return render_template("form.html")
+    return render_template("form.html.haml")
 
 @app.route('/', methods=['POST'])
 def form_post():
@@ -40,7 +55,7 @@ def form_post():
     graphdata = request_url.json()['data']
     graphjson = json.dumps(graphdata)
     graphjson = graphjson
-    return render_template("graph.html", graphjson= graphjson)
+    return render_template("graph.html.haml", graphjson= graphjson)
 
 @app.route('/api/response', methods=['GET'])
 def get_response():

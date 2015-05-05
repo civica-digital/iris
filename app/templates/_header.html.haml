@@ -1,0 +1,15 @@
+%html lang="en"
+  %head
+    %title -> Iris
+    %link rel="stylesheet" type="text/css" href="/static/css/main.css"
+    %link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"
+    %link rel="stylesheet" href="/static/css/home.css"
+%body
+  %div.inicio
+    %div.overlay-photo
+    -include "_menu.html.haml"
+    %div.container.texto-inicio
+      -block content
+        algo
+  %div.separador-verde
+  -include "_footer.html.haml"

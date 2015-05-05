@@ -1,0 +1,14 @@
+-extends "_header.html.haml"
+-block content
+  %div.container.texto-inicio
+    %h2.text-center.section-title
+      Ingrese la url completa del archivo con las respuestas
+    %h3.text-center.section-title
+      Copy paste desde la página es suficiente
+    %div.container
+     %div.col-md-12
+      %form.newsletter.center-block  _lpchecked="1" action="." method="POST"
+        %div.input-group.input-group-lg.local
+            %input.form-control#url placeholder="URL de la encuesta" type="url" name="url"
+        %div.input-group.input-group-lg.local.col-md-12
+            %input.btn.btn-default.btn-success.btn-lg.center-block#submit type="submit" value="Enviar encuesta" name="form"
