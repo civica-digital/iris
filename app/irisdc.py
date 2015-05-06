@@ -9,6 +9,7 @@ import csv
 import json
 import sys
 import queue
+import os
 import requests
 import mistune
 
@@ -31,6 +32,8 @@ __status__ = "Prototype"
 
 app = Flask(__name__)
 queue = queue.Queue()
+
+app.jinja_env.filters['env'] = os.getenv
 
 app.jinja_env.add_extension(HamlishExtension)
 
