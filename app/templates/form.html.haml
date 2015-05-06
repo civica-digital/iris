@@ -7,8 +7,11 @@
       Copy paste desde la página es suficiente
     %div.container
      %div.col-md-12
-      %form.newsletter.center-block  _lpchecked="1" action="." method="POST"
+      %form.newsletter.center-block  _lpchecked="1" action="." method="POST" id="gs_form"
         %div.input-group.input-group-lg.local
-            %input.form-control#url placeholder="URL de la encuesta" type="url" name="url"
+            %input.form-control#url placeholder="URL de la encuesta" type="url" name="url" id="url"
+            %span#flash
         %div.input-group.input-group-lg.local.col-md-12
             %input.btn.btn-default.btn-success.btn-lg.center-block#submit type="submit" value="Enviar encuesta" name="form"
+  %script src="//code.jquery.com/jquery-1.11.3.min.js"
+  %script src="/static/js/validation.js"
