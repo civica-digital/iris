@@ -1,25 +1,16 @@
 %html lang="en"
   %head
    %meta http-equiv="Content-Type" content="text/html;charset=utf-8"
-   %title Radar chart
+   %title {{ title }}
    %link rel="stylesheet" type="text/css" href="/static/css/main.css"
    %link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"
    %link rel="stylesheet" href="/static/css/home.css"
    %link rel="stylesheet" href="/static/css/graph.css"
-   %script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js"
-   %script src="../static/RadarChart.js"
+   %link rel="stylesheet" href="/static/css/md.css"
   %body
     %div.inicio
       -include "_menu.html.haml"
-    %div.container.row
-      %div.col-sm-8.col-md-4 id="chart"
-      %div.col-sm-8.col-md-4 id="description"
-        %h2#title
-          IRIS
-        %p#desc
-          Esta es visión general sobre tu grado de apertura de información.
+    %div.container.md
+      {{ content }}
     %div.separador-verde
     -include "_footer.html.haml"
-    %script
-      graphdump = {{graphjson|safe}};
-    %script src="/static/js/graph.js"

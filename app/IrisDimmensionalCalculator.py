@@ -2,6 +2,17 @@ from threading import Thread
 #import configparser
 import os
 import gspread
+import yaml
+
+import i18n
+
+i18n.load_path.append('app/locales/')
+i18n.set('locale', 'es')
+i18n.set('fallback', 'en')
+_ = i18n.t
+
+raw_ref = open("app/static/content/descripcion-indicadores.yml").read()
+ref = yaml.load(raw_ref)['Descripción de los indicadores']
 
 class IrisDimmensionalCalculator(Thread):
 
@@ -18,25 +29,25 @@ class IrisDimmensionalCalculator(Thread):
 		data = self.extract_data(raw_data)
 		readiness_scores = self.assess_readiness(data)
 		self.queue.put(readiness_scores)
-		
+
 
 	def get_docid(self, url):
 		tokens = url.split('/')
 		docid = ""
-		for token in tokens: 
+		for token in tokens:
 			if len(token)==44: docid = token
 		return docid
 
 	def get_keyset(self):
 		#config = configparser.ConfigParser()
 		#config.read(['./irisdc', os.path.expanduser('~/.irisdc')])
-		
+
 		keyset = {}
 		keyset['email'] = os.environ.get('EMAIL_USER')
 		keyset['password'] = os.environ.get('PASSWORD_USER')
 		#keyset['email'] = config.get("keyset",'email')
 		#keyset['password'] = config.get("keyset",'password')
-		
+
 		return keyset
 
 	def authenticate(self, email, password):
@@ -53,7 +64,7 @@ class IrisDimmensionalCalculator(Thread):
 		worksheet = sh.sheet1
 		# Gets all values from the first row.
 		answers_list = worksheet.row_values(2)
-		
+
 		return answers_list
 
 	# Extracts the data and loads it to a dictionary
@@ -70,13 +81,13 @@ class IrisDimmensionalCalculator(Thread):
 		'imp_self_assessment','cap_dbms','cap_design']
 		# Note: Answers that have CSV should be stored as a list.
 		answers_dict = dict(zip(variables, raw_data))
-		
+
 		return answers_dict
 
 	def set_max_grade(self, data):
 		max_grade = 1.0
 		rounded = float(data)
-		if data > max_grade: rounded = 1.0
+		if data >= max_grade: rounded = 0.99
 		return rounded
 
 	def percentage_to_decimal(self, inputdata):
@@ -93,32 +104,46 @@ class IrisDimmensionalCalculator(Thread):
 		legal_score = self.get_legal_score(data)
 		society_score = self.get_society_score(data)
 		impact_score = self.get_impact_score(data)
-		
+
 		readiness_scores = []
-		leaderdic = {'axis':'leadership',"value":leadership_score}
+		leaderdic = {'axis': _('iris.leadership'),
+					 'value': leadership_score,
+					 'desc': ref['leadership']}
 		readiness_scores.append(leaderdic)
 
-		fundic = {'axis':'fundings',"value":fundings_score}
+		fundic = {'axis': _('iris.fundings'),
+				  'value': fundings_score,
+				  'desc': ref['fundings']}
 		readiness_scores.append(fundic)
-		
-		capdic = {'axis':'capabilities',"value":capabilities_score}
+
+		capdic = {'axis': _('iris.capabilities'),
+				  'value': capabilities_score,
+				  'desc': ref['capabilities']}
 		readiness_scores.append(capdic)
 
-		opdic = {'axis':'openness',"value":openness_score}
+		opdic = {'axis': _('iris.openness'),
+				 'value': openness_score,
+				 'desc': ref['openness']}
 		readiness_scores.append(opdic)
-		
-		legdic = {'axis':'legal',"value":legal_score}
+
+		legdic = {'axis': _('iris.legal'),
+		          'value': legal_score,
+				  'desc': ref['legal']}
 		readiness_scores.append(legdic)
-		
-		socdic = {'axis':'society',"value":society_score}
+
+		socdic = {'axis': _('iris.society'),
+		          'value': society_score,
+				  'desc': ref['society']}
 		readiness_scores.append(socdic)
 
-		impdic = {'axis':'impact',"value":impact_score}
+		impdic = {'axis': _('iris.impact'),
+		          'value': impact_score,
+				  'desc': ref['impact']}
 		readiness_scores.append(impdic)
 
 
 		return readiness_scores
-	
+
 	# Leadership score
 	def get_leadership_score(self, data):
 		# Calculates the score for official allies.
@@ -128,7 +153,7 @@ class IrisDimmensionalCalculator(Thread):
 
 		official_allies = data['lead_official'].split(', ')
 		unofficial_allies = data['lead_unofficial'].split(', ')
-		
+
 		# Note: This should be customizable and loaded from elsewhere.
 		allies_weight = {
 			'Alcalde': 5,
@@ -144,8 +169,8 @@ class IrisDimmensionalCalculator(Thread):
 		}
 		multiplier = 3  # Determines the factor by which an official ally will be multiplied.
 		for ally in official_allies:
-			if ally in allies_weight.keys():	
-				ally_score = allies_weight[ally]*multiplier	
+			if ally in allies_weight.keys():
+				ally_score = allies_weight[ally]*multiplier
 				official_score += ally_score
 
 		for ally in unofficial_allies:
@@ -162,9 +187,9 @@ class IrisDimmensionalCalculator(Thread):
 
 	# Fundings score
 	def get_fundings_score(self, data):
-		
+
 		inprocess_sum = 0
-		
+
 		# To do: Validate presence, input is s a number, valid characters, ranges[0,100]
 		budget_data = data['funds_percentage']
 		budget = budget_data.strip("%")
@@ -173,7 +198,7 @@ class IrisDimmensionalCalculator(Thread):
 
 		# Note: Need to be extracareful here when handling the 'Otra' field.
 		sources_inprocess = data['funds_inprocess'].split(', ')
-		
+
 		for source in sources_inprocess:
 			inprocess_sum += 1
 
@@ -262,7 +287,7 @@ class IrisDimmensionalCalculator(Thread):
 		if geospatial > 0:
 			openness_sum += 3
 
-		
+
 		opn_training = float(data['opn_training'])
 
 		if opn_training == 1:
@@ -273,19 +298,19 @@ class IrisDimmensionalCalculator(Thread):
 
 		opn_training_technical = data['opn_training_technical']
 		opn_training_technical = self.percentage_to_decimal(opn_training_technical)
-		
+
 		opn_training_org = data['opn_training_org']
 		opn_training_org = self.percentage_to_decimal(opn_training_org)
 
 		opn_training_legal = data['opn_training_legal']
 		opn_training_legal = self.percentage_to_decimal(opn_training_legal)
 
-		if opn_training_org > 0 or opn_training > 0: 
+		if opn_training_org > 0 or opn_training > 0:
 			openness_sum += 2
 
 		opn_training_agencies = float(data['opn_training_agencies']) #Validate
-		
-		if opn_training_agencies > 1: 
+
+		if opn_training_agencies > 1:
 			openness_sum += 1
 
 		openness_score = openness_sum/8
@@ -299,7 +324,7 @@ class IrisDimmensionalCalculator(Thread):
 	# Policy/Legal Framework score
 	def get_legal_score(self, data):
 		legal_sum = 0
-		
+
 		local_law_status = data['leg_local_status']
 		if local_law_status == 'Establecida':
 			legal_sum += 2
@@ -311,7 +336,7 @@ class IrisDimmensionalCalculator(Thread):
 			legal_sum += 2
 		elif state_law_status == 'En planeación':
 			legal_sum += 1
-		
+
 		#license = data['leg_license']
 		#leg_license_comments = data['leg_license_comments']
 		#leg_decree = data['leg_decree']
@@ -322,14 +347,14 @@ class IrisDimmensionalCalculator(Thread):
 
 		legal_score = self.set_max_grade(legal_score)
 
-		legal_todo = 1.0 - legal_score 
+		legal_todo = 1.0 - legal_score
 
-		return legal_todo 
+		return legal_todo
 
 	# Society Readiness score
 	def get_society_score(self, data):
 		society_sum = 0
-		
+
 		# Validate this
 		allies = data['soc_allies'].split(", ")
 		if len(allies) > 1:

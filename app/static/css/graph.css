@@ -6,14 +6,28 @@ body {
 }
 
 #chart {
-  width: 100%;
   height: 700px;
   background-color: white;
-  padding: 50px;
+  padding: 50px 8%;
   text-align: center;
+  float: left;
 }
 
 
 .inicio {
   height: 90px;
+}
+
+.navbar {
+  padding: 14px 0;
+}
+
+.navbar-inverse {
+  background-color: #304660;
+  border-color: transparent;
+}
+
+#description {
+  float: right;
+  padding-top: 50px;
 }

@@ -1,0 +1,11 @@
+.md img {
+  width: 35em;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-shadow: -1px 0px 15px #888885;
+  
+}
+
+p>img {
+  text-align: center;
+}

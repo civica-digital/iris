@@ -9,7 +9,9 @@ import csv
 import json
 import sys
 import queue
+import os
 import requests
+import mistune
 
 from oauth2client.client import SignedJwtAssertionCredentials
 from flask import Flask, jsonify, request, render_template, send_from_directory
@@ -31,6 +33,8 @@ __status__ = "Prototype"
 app = Flask(__name__)
 queue = queue.Queue()
 
+app.jinja_env.filters['env'] = os.getenv
+
 app.jinja_env.add_extension(HamlishExtension)
 
 assets = Environment(app)
@@ -42,7 +46,7 @@ assets.register('css_all', css_bundle)
 #js_bundl = Bundle('js/home.js.coffe', filters='coffescript', output='all.js')
 #assets.register('js_all', js_bundle)
 
-@app.route('/')
+@app.route('/visualiza-tus-resultados')
 def form():
     return render_template("form.html.haml")
 
@@ -56,6 +60,18 @@ def form_post():
     graphjson = json.dumps(graphdata)
     graphjson = graphjson
     return render_template("graph.html.haml", graphjson= graphjson)
+
+@app.route('/')
+def get_que_es_iris():
+    file = open("app/static/content/index.md")
+    content = mistune.markdown(file.read())
+    return render_template("md.html.haml", title="Inicio", content=content)
+
+@app.route('/contesta-iris')
+def get_como_contestar_iris():
+    file = open("app/static/content/como-contestar-iris.md")
+    content = mistune.markdown(file.read())
+    return render_template("md.html.haml", title="Contesta IRIS", content=content)
 
 @app.route('/api/response', methods=['GET'])
 def get_response():

@@ -1,19 +1,27 @@
 //Practically all this code comes from https://github.com/alangrafu/radar-chart-d3
-//I only made some additions and aesthetic adjustments to make the chart look better 
+//I only made some additions and aesthetic adjustments to make the chart look better
 //(of course, that is only my point of view)
-//Such as a better placement of the titles at each line end, 
+//Such as a better placement of the titles at each line end,
 //adding numbers that reflect what each circular level stands for
 //Not placing the last level and slight differences in color
 //
 //For a bit of extra information check the blog about it:
 //http://nbremer.blogspot.nl/2013/09/making-d3-radar-chart-look-bit-better.html
 
+
+var hoverDescription = function (d) {
+  if (d !== undefined && d !== null) {
+    d3.select("#title").text(d.title);
+    d3.select("#desc").text(d.description);
+  }
+}
+
 var RadarChart = {
   draw: function(id, d, options){
   var cfg = {
 	 radius: 5,
-	 w: 600,
-	 h: 600,
+	 w: 300,
+	 h: 300,
 	 factor: 1,
 	 factorLegend: .85,
 	 levels: 3,
@@ -27,7 +35,7 @@ var RadarChart = {
 	 ExtraWidthY: 100,
 	 color: d3.scale.category10()
 	};
-	
+
 	if('undefined' !== typeof options){
 	  for(var i in options){
 		if('undefined' !== typeof options[i]){
@@ -36,12 +44,12 @@ var RadarChart = {
 	  }
 	}
 	cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){return d3.max(i.map(function(o){return o.value;}))}));
-	var allAxis = (d[0].map(function(i, j){return i.axis}));
+	var allAxis = (d[0].map(function(i, j){return [i.axis,i.desc]}));
 	var total = allAxis.length;
 	var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
 	var Format = d3.format('%');
 	d3.select(id).select("svg").remove();
-	
+
 	var g = d3.select(id)
 			.append("svg")
 			.attr("width", cfg.w+cfg.ExtraWidthX)
@@ -51,7 +59,7 @@ var RadarChart = {
 			;
 
 	var tooltip;
-	
+
 	//Circular segments
 	for(var j=0; j<cfg.levels-1; j++){
 	  var levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
@@ -86,7 +94,7 @@ var RadarChart = {
 	   .attr("fill", "#737373")
 	   .text(Format((j+1)*cfg.maxValue/cfg.levels));
 	}
-	
+
 	series = 0;
 
 	var axis = g.selectAll(".axis")
@@ -106,22 +114,25 @@ var RadarChart = {
 
 	axis.append("text")
 		.attr("class", "legend")
-		.text(function(d){return d})
+		.text(function(d){return d[0]})
 		.style("font-family", "sans-serif")
 		.style("font-size", "11px")
 		.attr("text-anchor", "middle")
 		.attr("dy", "1.5em")
 		.attr("transform", function(d, i){return "translate(0, -10)"})
 		.attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
-		.attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
+		.attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);})
+    .on('mouseover', function (d) {
+      hoverDescription(d[1]);
+      console.log("data " + JSON.stringify(d))
+    });
 
- 
 	d.forEach(function(y, x){
 	  dataValues = [];
 	  g.selectAll(".nodes")
 		.data(y, function(j, i){
 		  dataValues.push([
-			cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)), 
+			cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
 			cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
 		  ]);
 		});
@@ -146,7 +157,7 @@ var RadarChart = {
 										z = "polygon."+d3.select(this).attr("class");
 										g.selectAll("polygon")
 										 .transition(200)
-										 .style("fill-opacity", 0.1); 
+										 .style("fill-opacity", 0.1);
 										g.selectAll(z)
 										 .transition(200)
 										 .style("fill-opacity", .7);
@@ -169,7 +180,7 @@ var RadarChart = {
 		.attr("alt", function(j){return Math.max(j.value, 0)})
 		.attr("cx", function(j, i){
 		  dataValues.push([
-			cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)), 
+			cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
 			cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
 		]);
 		return cfg.w/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total));
@@ -182,18 +193,17 @@ var RadarChart = {
 		.on('mouseover', function (d){
 					newX =  parseFloat(d3.select(this).attr('cx')) - 10;
 					newY =  parseFloat(d3.select(this).attr('cy')) - 5;
-					
 					tooltip
 						.attr('x', newX)
 						.attr('y', newY)
 						.text(Format(d.value))
 						.transition(200)
 						.style('opacity', 1);
-						
+
 					z = "polygon."+d3.select(this).attr("class");
 					g.selectAll("polygon")
 						.transition(200)
-						.style("fill-opacity", 0.1); 
+						.style("fill-opacity", 0.1);
 					g.selectAll(z)
 						.transition(200)
 						.style("fill-opacity", .7);
