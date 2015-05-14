@@ -36,3 +36,19 @@
   margin-bottom: 0px;
   margin-bottom: -8px;
 }
+
+.separador-verde {
+  position: relative;
+  /* bottom: 85px; */
+  width: 100%;
+}
+
+footer {
+  width: 100%;
+  bottom: 0px;
+  position: relative;
+}
+
+.branding .container {
+  padding-bottom: 50px;
+}
