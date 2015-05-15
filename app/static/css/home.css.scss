@@ -41,12 +41,21 @@
   position: relative;
   /* bottom: 85px; */
   width: 100%;
+
+  @media (min-width: 1800px) {
+    position: absolute;
+    bottom: 137px;
+  }
 }
 
 footer {
   width: 100%;
   bottom: 0px;
   position: relative;
+
+  @media (min-width: 1800px) {
+    position: absolute;
+  }
 }
 
 .branding .container {
