@@ -40,7 +40,7 @@ app.jinja_env.add_extension(HamlishExtension)
 assets = Environment(app)
 assets.url = app.static_url_path
 
-css_bundle = Bundle('css/home.css.css',  output='all.css')
+css_bundle = Bundle('css/home.css.scss', filters="scss", output='css/all.css')
 assets.register('css_all', css_bundle)
 
 #js_bundl = Bundle('js/home.js.coffe', filters='coffescript', output='all.js')
