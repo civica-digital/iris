@@ -16,8 +16,8 @@ import mistune
 from oauth2client.client import SignedJwtAssertionCredentials
 from flask import Flask, jsonify, request, render_template, send_from_directory
 from hamlish_jinja import HamlishExtension
-from flask.ext.assets import Environment, Bundle
-
+from flask.ext.assets import Environment, Bundle, register_filter
+from livescript import LiveScript
 
 import IrisDimmensionalCalculator
 
@@ -34,6 +34,8 @@ app = Flask(__name__)
 queue = queue.Queue()
 
 app.jinja_env.filters['env'] = os.getenv
+register_filter(LiveScript)
+
 
 app.jinja_env.add_extension(HamlishExtension)
 
@@ -43,8 +45,9 @@ assets.url = app.static_url_path
 css_bundle = Bundle('css/home.css.scss', filters="scss", output='css/all.css')
 assets.register('css_all', css_bundle)
 
+validation_bundle = Bundle('js/validation.ls', filters='livescript', output='js/validations.js')
 #js_bundl = Bundle('js/home.js.coffe', filters='coffescript', output='all.js')
-#assets.register('js_all', js_bundle)
+assets.register('js_all', validation_bundle)
 
 @app.route('/visualiza-tus-resultados')
 def form():

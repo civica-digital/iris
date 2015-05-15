@@ -14,4 +14,5 @@
         %div.input-group.input-group-lg.local.col-md-12
             %input.btn.btn-default.btn-success.btn-lg.center-block#submit type="submit" value="Enviar encuesta" name="form"
   %script src="//code.jquery.com/jquery-1.11.3.min.js"
-  %script src="/static/js/validation.js"
+  -assets "js_all"
+    %script src="{{ ASSET_URL }}"
