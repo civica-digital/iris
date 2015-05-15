@@ -10,6 +10,7 @@
     "url": "https://github.com/zoek1/iris.git"
   },
   "dependencies": {
-    "coffee-script": "^1.9.2"
+    "coffee-script": "^1.9.2",
+    "livescript": "^1.4.0"
   }
 }
