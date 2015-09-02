@@ -1,4 +1,5 @@
 from threading import Thread
+from oauth2client.client import SignedJwtAssertionCredentials
 #import configparser
 import os
 import gspread
@@ -51,11 +52,11 @@ class IrisDimmensionalCalculator(Thread):
 		return keyset
 
 	def authenticate(self, email, password):
-		# Warning: ClientLogin is deprecated since April 20, 2015.
-		# Should migrate to OAuth2 authentication.
+		# OAuth2 implementation, used "password" to refer to API key value of credentials.
 
-		# These should be placed in the environment variables.
-		auth = gspread.login(email, password)
+		scope = ['https://spreadsheets.google.com/feeds']
+		credentials = SignedJwtAssertionCredentials(email, password, scope)
+		auth = gspread.authorize(credentials)
 		return auth
 
 	def read_data(self, auth, docid):
