@@ -55,7 +55,7 @@ class IrisDimmensionalCalculator(Thread):
 		# OAuth2 implementation, used "password" to refer to API key value of credentials.
 
 		scope = ['https://spreadsheets.google.com/feeds']
-		credentials = SignedJwtAssertionCredentials(email, password, scope)
+		credentials = SignedJwtAssertionCredentials(email, bytes(password,'utf-8'), scope)
 		auth = gspread.authorize(credentials)
 		return auth
 
