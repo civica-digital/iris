@@ -153,6 +153,7 @@ class IrisDimmensionalCalculator(Thread):
 		# Calculates the score for unofficial allies.
 		unofficial_score = 0
 
+		print(data)
 		official_allies = data['lead_official'].split(', ')
 		unofficial_allies = data['lead_unofficial'].split(', ')
 
