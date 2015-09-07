@@ -62,10 +62,10 @@ class IrisDimmensionalCalculator(Thread):
 		return auth
 
 	def hash_questions(questions_list):
-		hash_questions = []
+		hashed_questions_list = []
 		for question in questions_list:
-			hash_questions.append(hashlib.sha256(item.encode()).hexdigest())
-		return hash_questions
+			hashed_questions_list.append(hashlib.sha256(item.encode()).hexdigest())
+		return hashed_questions_list
 
 	def read_data(self, auth, docid):
 		# Opens a worksheet from spreadsheet from its key
