@@ -64,7 +64,7 @@ class IrisDimmensionalCalculator(Thread):
 	def hash_questions(questions_list):
 		hashed_questions_list = []
 		for question in questions_list:
-			hashed_questions_list.append(hashlib.sha256(item.encode()).hexdigest())
+			hashed_questions_list.append(hashlib.sha256(question.encode()).hexdigest())
 		return hashed_questions_list
 
 	def read_data(self, auth, docid):
