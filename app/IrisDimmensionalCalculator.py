@@ -72,7 +72,7 @@ class IrisDimmensionalCalculator(Thread):
 		sh = auth.open_by_key(docid)
 		worksheet = sh.sheet1
 		# Gets all values from the first row and hash them.
-		question_list = hash_questions(worksheet.row_values(0))
+		question_list = self.hash_questions(worksheet.row_values(0))
 		answers_list = worksheet.row_values(2)
 		return dict(zip(question_list,answers_list))
 
