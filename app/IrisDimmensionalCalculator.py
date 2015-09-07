@@ -65,7 +65,7 @@ class IrisDimmensionalCalculator(Thread):
         hash_output = []
 	    for item in string_list:
             hash_output.append(hashlib.sha256(item.encode()).hexdigest())
-    return hash_output
+        return hash_output
 
 	def read_data(self, auth, docid):
 		# Opens a worksheet from spreadsheet from its key
