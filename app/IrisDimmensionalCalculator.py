@@ -61,7 +61,7 @@ class IrisDimmensionalCalculator(Thread):
 		auth = gspread.authorize(credentials)
 		return auth
 
-	def hash_questions(questions_list):
+	def hash_questions(self,questions_list):
 		hashed_questions_list = []
 		for question in questions_list:
 			hashed_questions_list.append(hashlib.sha256(question.encode()).hexdigest())
