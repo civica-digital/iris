@@ -28,7 +28,7 @@ Hemos preparado un formulario personalizado para conocer los retos de cada ciuda
 
    ![Compartir documento](static/images/5a_compartir_documento.png)
 
-   * En la ventana de "Compartir con otros", añade como editores a los correos: **1020519046545-6kbgvvd6rpjevfs3907hre0ic96lr05c@developer.gserviceaccount.com** y **redredmexicoabierto@gmail.com** y da click en **Listo**.
+   * En la ventana de "Compartir con otros", añade como editores a los correos: **1020519046545-6kbgvvd6rpjevfs3907hre0ic96lr05c@developer.gserviceaccount.com** y **redmexicoabierto@gmail.com** y da click en **Listo**.
 
    ![Compartir con otros](static/images/5b_compartir_con_otros.png)
 
