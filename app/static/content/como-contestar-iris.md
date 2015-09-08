@@ -28,13 +28,9 @@ Hemos preparado un formulario personalizado para conocer los retos de cada ciuda
 
    ![Compartir documento](static/images/5a_compartir_documento.png)
 
-   * En la ventana de "Compartir con otros", da click en **Avanzada**.
+   * En la ventana de "Compartir con otros", añade como editores a los correos: **1020519046545-6kbgvvd6rpjevfs3907hre0ic96lr05c@developer.gserviceaccount.com** y **redredmexicoabierto@gmail.com** y da click en **Listo**.
 
    ![Compartir con otros](static/images/5b_compartir_con_otros.png)
-
-   * En la venta de "Uso compartido de enlaces", selecciona **Sí: cualquier usuario con enlace** y da click en **Guardar**.
-
-   ![Uso compartido de enlaces](static/images/5c_uso_compartido.png)
 
 6. Accede de nuevo a [Google Drive](http://drive.google.com) y abre el documento con los resultados.
 7. Copia de la barra de direcciones del navegador la dirección (URL) del documento. El documento debe tener un formato similar a éste: *https://docs.google.com/a/spreadsheets/d/1Ptv-lIAnNb93FaySStmpRpgzCsLmHXuXtgWRRelUg8g/edit#gid=717561459*
