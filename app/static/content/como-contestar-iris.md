@@ -34,7 +34,7 @@ Hemos preparado un formulario personalizado para conocer los retos de cada ciuda
 
 6. Accede de nuevo a [Google Drive](http://drive.google.com) y abre el documento con los resultados.
 7. Copia de la barra de direcciones del navegador la dirección (URL) del documento. El documento debe tener un formato similar a éste: *https://docs.google.com/a/spreadsheets/d/1Ptv-lIAnNb93FaySStmpRpgzCsLmHXuXtgWRRelUg8g/edit#gid=717561459*
-8. Ve a la página de [Visualiza tus resultados](/visualiza-tus-resultados), pega la dirección en el campo de texto y da click en **Ver resultados**.
+8. Tras esperar unos pocos minutos, ve a la página de [Visualiza tus resultados](/visualiza-tus-resultados), pega la dirección en el campo de texto y da click en **Ver resultados**.
 
    ![Uso compartido de enlaces](static/images/5c_uso_compartido.png)
 
